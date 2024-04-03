@@ -1,5 +1,4 @@
 const { hd, config, helpers } = require('@ckb-lumos/lumos');
-const { CONFIG } = require("@ckb-lumos/config-manager");
 
 function getAddressByPrivateKey(privateKey) {
     const args = hd.key.privateKeyToBlake160(privateKey);
@@ -10,7 +9,7 @@ function getAddressByPrivateKey(privateKey) {
         args: args,
     };
 
-    return helpers.encodeToAddress(lockScript, { config: CONFIG });
+    return helpers.encodeToAddress(lockScript, { config: config.predefined.AGGRON4 });
 }
 
 module.exports = { getAddressByPrivateKey };

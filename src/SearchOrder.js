@@ -8,7 +8,7 @@ const rpc = new RPC(CKB_RPC_URL)
 const indexer = new Indexer(CKB_INDEXER_URL, CKB_RPC_URL)
 
 class SearchOrder {
-    execute() {
+    async execute() {
         console.log('This is SearchOrder');
         const config = readConfig();
 
