@@ -7,7 +7,7 @@ const CKB_INDEXER_URL = "https://testnet.ckb.dev/indexer";
 const rpc = new RPC(CKB_RPC_URL)
 const indexer = new Indexer(CKB_INDEXER_URL, CKB_RPC_URL)
 
-
+config.initializeConfig(config.predefined.AGGRON4);
 
 class SearchOrder {
     async execute() {
@@ -16,10 +16,11 @@ class SearchOrder {
 
         console.log("config:", config.password);
 
-        const address = "ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt49kt2rr0vthywaa50xwsqg72dmczutz7rpk3um8r2aef0u85a6a8ks45swt6";
+        const privateKey = "0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+        const address = require('../tools/utils.js').getAddressByPrivateKey(privateKey);
         const lockScript = utils.computeScriptHash(helpers.parseAddress(address));
 
-        
+        console.log("Hello!")
         
         await this.getSudtCells(address, lockScript);
     }
@@ -40,10 +41,11 @@ class SearchOrder {
             cellArray.push(cell);
         }
         console.log(cellArray);
-
+        
+        return cellArray;
     }
 
-    async getSudtTokenAmount(address, sudtArgs) {
+    async getFreeSudtTokenAmount(address, sudtArgs) {
         const collector = indexer.collector({
             lock: helpers.parseAddress(address),
             type: {
