@@ -44,7 +44,12 @@ class SearchOrder {
     // );
     // await console.log(dumpExchangeOutputsData(50000, 50000));
 
-    console.log(await this.getOrderCellArray(lockScript));
+    console.log(
+      "'getFreeSudtCells():' Run Result: ",
+      await this.getFreeSudtCells(address, lockScript)
+    );
+
+    // console.log(await this.getOrderCellArray(lockScript));
   }
 
   async getFreeSudtCells(address, sudtArgs) {
@@ -92,7 +97,7 @@ class SearchOrder {
         codeHash:
           "0x00000000000000000000000000000000000000000000000000545950455f4944",
         hashType: "type",
-        args: "0x740f2f6ecfd263a75baf3c83baf34aac1e68b40d00e31289910a2e848f520ec2", // This might be arbitrary
+        args: "0x", // This might be arbitrary
       },
       type: {
         codeHash: config.predefined.AGGRON4.SCRIPTS["SUDT"].CODE_HASH,
