@@ -1,0 +1,26 @@
+{
+  "name": "lockswap",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "MakeOrder": "node .\\src\\index.js MakeOrder",
+    "Generate": "node .\\src\\index.js Generate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ckb-lumos/config-manager": "^0.21.1",
+    "@ckb-lumos/hd": "^0.21.1",
+    "@ckb-lumos/helpers": "^0.21.1",
+    "@ckb-lumos/lumos": "^0.21.1",
+    "@nervosnetwork/ckb-sdk-core": "^0.109.1",
+    "@nervosnetwork/ckb-sdk-utils": "^0.109.1",
+    "blakejs": "^1.2.1",
+    "commander": "^12.0.0",
+    "dotenv": "^16.4.5",
+    "pretty-error": "^4.0.0"
+  }
+}
