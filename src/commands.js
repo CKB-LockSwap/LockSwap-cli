@@ -73,15 +73,8 @@ async function interactiveMode() {
             await makeOrder.execute();
             break;
         case 'generate-account':
-            const { accountType } = await inquirer.prompt([
-                {
-                    type: 'input',
-                    name: 'accountType',
-                    message: 'Enter the account type:'
-                }
-            ]);
             const generateAccount = new GenerateAccount();
-            await generateAccount.execute(accountType);
+            await generateAccount.execute();
             break;
         case 'exit':
             process.exit();
