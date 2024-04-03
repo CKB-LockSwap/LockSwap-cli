@@ -1,13 +1,13 @@
 class MakeOrder {
-    constructor(usdtCell, price) {
+    constructor(SUDTCell, price) {
         // 构造函数
-        this.usdtCell = usdtCell;
+        this.SUDTCell = SUDTCell;
         this.price = price;
     }
-
+ 
     execute() {
         console.log('This is MakeOrder');
-        console.log('This usdtCell:',usdtCell);
+        console.log('This SUDTCell:',SUDTCell);
         console.log('This price:',price);
     }
 }
