@@ -15,8 +15,6 @@ class SearchOrder {
     }
     
     async getSudtCells() {
-        const config = readConfig();
-
         const collector = indexer.collector({
             type: {
                 code_hash: config.code_hash,
