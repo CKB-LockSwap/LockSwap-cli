@@ -38,7 +38,7 @@ class MakeOrder {
 
     const bobAddress =
       "ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt49kt2rr0vthywaa50xwsqgy5rtexzvhk7jt7gla8wlq5lztf79tjhg9fmd4f";
-    console.log(await this.transfer(address, bobAddress, 1000, privateKey));
+    console.log(this.transfer(address, bobAddress, 1000, privateKey));
 
     // this.makeOrder(address);
   }
