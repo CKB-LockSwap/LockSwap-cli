@@ -4,7 +4,7 @@ class SearchOrder {
     execute() {
         console.log('This is SearchOrder');
         const config = readConfig();
-        console.log("config:", config.password);
+        console.log("config:", config.code_hash);
     }
 }
 
