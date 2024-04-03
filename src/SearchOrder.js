@@ -37,16 +37,17 @@ class SearchOrder {
 
     console.log("Hello!");
 
-    // await this.getSudtCells(address, lockScript);
+    // await this.getFreeSudtCells(address, lockScript);
 
-    await console.log(
-      parseExchangeOutputsData("0x50c30000000000000000000000000000")
-    );
+    // await console.log(
+    //   parseExchangeOutputsData("0x50c30000000000000000000000000000")
+    // );
+    // await console.log(dumpExchangeOutputsData(50000, 50000));
 
-    await console.log(dumpExchangeOutputsData(50000, 50000));
+    console.log(await this.getOrderCellArray(lockScript));
   }
 
-  async getSudtCells(address, sudtArgs) {
+  async getFreeSudtCells(address, sudtArgs) {
     const collector = indexer.collector({
       lock: helpers.parseAddress(address),
       type: {
@@ -83,6 +84,30 @@ class SearchOrder {
     }
 
     return amount.toNumber();
+  }
+
+  async getOrderCellArray(sudtArgs) {
+    const collector = indexer.collector({
+      lock: {
+        codeHash:
+          "0x00000000000000000000000000000000000000000000000000545950455f4944",
+        hashType: "type",
+        args: "0x740f2f6ecfd263a75baf3c83baf34aac1e68b40d00e31289910a2e848f520ec2", // This might be arbitrary
+      },
+      type: {
+        codeHash: config.predefined.AGGRON4.SCRIPTS["SUDT"].CODE_HASH,
+        hashType: config.predefined.AGGRON4.SCRIPTS["SUDT"].HASH_TYPE,
+        args: sudtArgs,
+      },
+    });
+
+    let orderCellArray = new Array();
+
+    for await (const orderCell of collector.collect()) {
+      orderCellArray.push(orderCell);
+    }
+
+    return orderCellArray;
   }
 }
 
