@@ -7,6 +7,8 @@ const CKB_INDEXER_URL = "https://testnet.ckb.dev/indexer";
 const rpc = new RPC(CKB_RPC_URL)
 const indexer = new Indexer(CKB_INDEXER_URL, CKB_RPC_URL)
 
+
+
 class SearchOrder {
     async execute() {
         console.log('This is SearchOrder');
@@ -14,9 +16,12 @@ class SearchOrder {
 
         console.log("config:", config.password);
 
-        const address = "ckb1qzda0cr08m85hc8jlnfp3zer7xulejywt49kt2rr0vthywaa50xwsqg72dmczutz7rpk3um8r2aef0u85a6a8ksmxmppz";
+        const address = "ckt1qzda0cr08m85hc8jlnfp3zer7xulejywt49kt2rr0vthywaa50xwsqg72dmczutz7rpk3um8r2aef0u85a6a8ks45swt6";
         const lockScript = utils.computeScriptHash(helpers.parseAddress(address));
-        this.getSudtCells(address, lockScript);
+
+        
+        
+        await this.getSudtCells(address, lockScript);
     }
     
     async getSudtCells(address, sudtArgs) {
