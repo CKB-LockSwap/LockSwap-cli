@@ -1,6 +1,7 @@
 const { readConfig } = require('../config/config.js');
 
-const { hd, config, helpers, RPC, Indexer  } = require('@ckb-lumos/lumos');
+const { hd, config, helpers, RPC, Indexer, Address, utils, BI } = require('@ckb-lumos/lumos');
+const { number } = require('@ckb-lumos/codec')
 const CKB_RPC_URL = "https://testnet.ckb.dev/rpc";
 const CKB_INDEXER_URL = "https://testnet.ckb.dev/indexer";
 const rpc = new RPC(CKB_RPC_URL)
@@ -12,22 +13,51 @@ class SearchOrder {
         const config = readConfig();
 
         console.log("config:", config.password);
-        this.getSudtCells();
+
+        const address = "ckb1qzda0cr08m85hc8jlnfp3zer7xulejywt49kt2rr0vthywaa50xwsqg72dmczutz7rpk3um8r2aef0u85a6a8ksmxmppz";
+        const lockScript = utils.computeScriptHash(helpers.parseAddress(address));
+        this.getSudtCells(address, lockScript);
     }
     
-    async getSudtCells() {
+    async getSudtCells(address, sudtArgs) {
         const collector = indexer.collector({
+            lock: helpers.parseAddress(address),
             type: {
-                "code_hash": "0xc5e5dcf215925f7ef4dfaf5f4b4f105bc321c02776d6e7d52a1db3fcd9d011a4",
-                "hash_type": "type",
-                "args": "0x20df773adb5ed3b5fae09ebb97504a9c7db3b9a0ff534e96e829dd585146e20c"
-            }})
+                codeHash: config.predefined.AGGRON4.SCRIPTS['SUDT'].CODE_HASH,
+                hashType: config.predefined.AGGRON4.SCRIPTS['SUDT'].HASH_TYPE,
+                args: sudtArgs
+            }
+        });
 
-        for await(const cell of collector.collect()) {
-            console.log(cell.data);
+        let cellArray = new Array();
+
+        for await(const cell of collector.collect()){
+            cellArray.push(cell);
         }
+        console.log(cellArray);
 
     }
+
+    async getSudtTokenAmount(address, sudtArgs) {
+        const collector = indexer.collector({
+            lock: helpers.parseAddress(address),
+            type: {
+                codeHash: config.predefined.AGGRON4.SCRIPTS['SUDT'].CODE_HASH,
+                hashType: config.predefined.AGGRON4.SCRIPTS['SUDT'].HASH_TYPE,
+                args: sudtArgs
+            }
+        });
+
+        let amount = BI.from(0);
+
+        for await(const cell of collector.collect()) {
+            amount = amount.add(number.Uint128LE.unpack(cell.data));
+        }
+
+        return amount.toNumber();
+    }
+
+
 }
 
 module.exports = SearchOrder;
