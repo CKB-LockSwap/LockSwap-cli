@@ -7,13 +7,15 @@ const {
   Address,
   utils,
   BI,
+  commons,
 } = require("@ckb-lumos/lumos");
-const { number, commons } = require("@ckb-lumos/codec");
+const { number } = require("@ckb-lumos/codec");
 const {
   getAddressByPrivateKey,
   parseExchangeOutputsData,
   dumpExchangeOutputsData,
 } = require("../tools/myutils.js");
+const { get } = require("http");
 const CKB_RPC_URL = "https://testnet.ckb.dev/rpc";
 const CKB_INDEXER_URL = "https://testnet.ckb.dev/indexer";
 const rpc = new RPC(CKB_RPC_URL);
@@ -59,7 +61,9 @@ class MakeOrder {
     txSkeleton = await commons.common.payFeeByFeeRate(txSkeleton, [from], 1000);
     txSkeleton = commons.common.prepareSigningEntries(txSkeleton);
 
-    const message = txSkeleton.get("signingEntries")[0].message;
+    console.log(txSkeleton);
+
+    const message = txSkeleton.get("signingEntries").get(0)?.message;
     const Sig = hd.key.signRecoverable(message, privateKey);
     const tx = helpers.sealTransaction(txSkeleton, [Sig]);
 
