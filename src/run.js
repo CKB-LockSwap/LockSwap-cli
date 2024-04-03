@@ -1,12 +1,12 @@
-// run.js
-
 const { setupCommands } = require('./commands');
 
-function cmd(program) {
-    const configuredProgram = setupCommands();
-    configuredProgram.parseAsync(process.argv).catch(err => {
+async function cmd() {
+    const program = setupCommands();
+    try {
+        await program.parseAsync(process.argv);
+    } catch (err) {
         throw err;
-    });
+    }
 }
 
 module.exports = { cmd };

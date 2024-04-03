@@ -4,8 +4,6 @@ require("dotenv").config();
 
 const CONFIG = config.predefined.AGGRON4;
 
-console.log("CONFIG:",CONFIG);
-
 class GenerateAccount {
     execute() {
         const privateKey = this.generateFirstHDPrivateKey();
